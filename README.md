@@ -23,8 +23,7 @@ The project follows a microservices architecture with three main components:
 Smart Email Assistant/
 ├── email-writer-backend/     # Spring Boot REST API
 ├── email-writer-frontend/    # React Web Application
-├── email-writer-extension/   # Chrome Extension
-└── Hello World Extension/    # Sample Extension
+└── email-writer-extension/   # Chrome Extension
 ```
 
 ### Backend (Spring Boot)
