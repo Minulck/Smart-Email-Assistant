@@ -295,16 +295,6 @@ Smart-Email-Assistant/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- **Google Gemini AI** for providing the powerful language model for email generation
-- **Spring Boot team** for the excellent framework
-- **React team** for the frontend library  
-- **Material-UI** for the comprehensive component library
-- **Vite** for the fast build tool and development experience
-- **Chrome Extensions API** documentation and community
-- **Axios** for reliable HTTP client functionality
-
 ## 📞 Support
 
 If you encounter any issues or have questions, please:
