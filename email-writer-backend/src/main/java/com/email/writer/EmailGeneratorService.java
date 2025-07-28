@@ -10,11 +10,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Map;
 
 @Service
-@AllArgsConstructor
+
 public class EmailGeneratorService {
 
     private final WebClient webClient;
 
+    public EmailGeneratorService(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.build();
+    }
 
     @Value("${gemini.api.url}")
     private String geminiApiUrl;
@@ -37,8 +40,8 @@ public class EmailGeneratorService {
 
         String response = webClient.post()
                 .uri(geminiApiUrl+geminiApiKey)
-                .header(
-                        "Content-Tyoe","Application/json")
+                .header("Content-Tyoe","Application/json")
+                .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
