@@ -63,6 +63,8 @@ cd Smart-Email-Assistant
 ```bash
 cd email-writer-backend
 
+# IMPORTANT: Configure API Keys first (see Configuration section below)
+
 # Install dependencies and run
 ./mvnw spring-boot:run
 # OR on Windows
@@ -92,12 +94,37 @@ npm run dev
 
 ## 🔧 Configuration
 
+### API Keys Setup (IMPORTANT)
+Before running the backend, you need to configure your API keys:
+
+1. **Navigate to the backend resources folder**:
+   ```bash
+   cd email-writer-backend/src/main/resources
+   ```
+
+2. **Copy the template file**:
+   ```bash
+   cp api-keys.properties.template api-keys.properties
+   ```
+
+3. **Edit the `api-keys.properties` file** and replace `YOUR_GEMINI_API_KEY_HERE` with your actual Gemini API key:
+   ```properties
+   # API Configuration
+   gemini.api.key=YOUR_ACTUAL_GEMINI_API_KEY_HERE
+   ```
+
+4. **Important Security Notes**:
+   - The `api-keys.properties` file is already added to `.gitignore` and will not be committed to version control
+   - Never commit your actual API keys to the repository
+   - Keep your API keys secure and do not share them publicly
+
 ### Backend Configuration
 The backend configuration can be found in `email-writer-backend/src/main/resources/application.properties`:
 
 ```properties
-# Add your configuration here
-server.port=8080
+spring.application.name=email-writer
+spring.config.import=optional:classpath:api-keys.properties
+gemini.api.url=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
 # Configure other properties as needed
 ```
 

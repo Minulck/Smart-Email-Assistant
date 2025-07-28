@@ -33,3 +33,8 @@ build/
 .vscode/
 
 ### environment files ###
+**/api-keys.properties
+.env
+.env.local
+.env.development
+.env.production
