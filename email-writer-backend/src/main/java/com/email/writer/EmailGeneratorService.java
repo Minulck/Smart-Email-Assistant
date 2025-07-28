@@ -1,8 +1,7 @@
-package com.email.writerapp;
+package com.email.writer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -30,7 +29,7 @@ public class EmailGeneratorService {
         String prompt = buildPrompt(emailRequest);
 
         Map<String , Object> requestBody= Map.of(
-          "content",new Object[]{
+          "contents",new Object[]{
                   Map.of(
                           "parts",new Object[]{
                                  Map.of("text",prompt)
@@ -39,8 +38,9 @@ public class EmailGeneratorService {
         );
 
         String response = webClient.post()
-                .uri(geminiApiUrl+geminiApiKey)
-                .header("Content-Tyoe","Application/json")
+                .uri(geminiApiUrl)
+                .header("Content-Type","Application/json")
+                .header("X-goog-api-key", geminiApiKey)
                 .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(String.class)
