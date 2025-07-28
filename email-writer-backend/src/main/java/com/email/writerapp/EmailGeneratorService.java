@@ -16,10 +16,10 @@ public class EmailGeneratorService {
     private final WebClient webClient;
 
 
-    @Value("${geminai.api.url}")
+    @Value("${gemini.api.url}")
     private String geminiApiUrl;
 
-    @Value("${geminai.api.key}")
+    @Value("${gemini.api.key}")
     private String geminiApiKey;
 
     public String generateEmailReply(EmailRequest emailRequest) {
@@ -36,10 +36,9 @@ public class EmailGeneratorService {
         );
 
         String response = webClient.post()
-                .uri(geminiApiUrl)
+                .uri(geminiApiUrl+geminiApiKey)
                 .header(
                         "Content-Tyoe","Application/json")
-                .header("X-goog-api-key",geminiApiKey)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
