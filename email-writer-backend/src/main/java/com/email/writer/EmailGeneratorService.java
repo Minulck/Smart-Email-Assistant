@@ -13,6 +13,7 @@ import java.util.Map;
 public class EmailGeneratorService {
 
     private final WebClient webClient;
+    
 
     public EmailGeneratorService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.build();
