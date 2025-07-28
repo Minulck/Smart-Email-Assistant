@@ -1,4 +1,4 @@
-package com.email.writer;
+package com.email.writer.replygenerte;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
