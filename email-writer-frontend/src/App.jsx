@@ -25,7 +25,7 @@ function App() {
     setError("");
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/email/generate",
+        "https://smart-email-assistant-51kx.onrender.com/api/email/generate",
         {
           emailContent,
           tone,
