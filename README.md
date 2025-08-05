@@ -97,10 +97,48 @@ npm run dev
 ```
 
 ### 4. Chrome Extension Setup
-1. Open Chrome and navigate to `chrome://extensions/`
-2. Enable "Developer mode" in the top right
-3. Click "Load unpacked" and select the `email-writer-extension` folder
-4. The extension will be installed and ready to use
+
+#### Building the Extension Locally
+1. **Navigate to the extension directory**:
+   ```bash
+   cd email-writer-extension
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Build the extension**:
+   ```bash
+   npm run build
+   ```
+   This will create a `dist` folder with the built extension files.
+
+#### Installing in Chrome
+1. **Open Chrome** and navigate to `chrome://extensions/`
+2. **Enable "Developer mode"** by toggling the switch in the top right corner
+3. **Click "Load unpacked"** button that appears after enabling developer mode
+4. **Select the extension folder**:
+   - If you built the extension: Select the `dist` folder inside `email-writer-extension`
+   - If using directly: Select the `email-writer-extension` folder
+5. The extension will be installed and you'll see its icon in your Chrome toolbar
+
+#### Updating the Extension
+1. After making changes to the extension code:
+   ```bash
+   cd email-writer-extension
+   npm run build
+   ```
+2. Go to `chrome://extensions/`
+3. Find the Smart Email Assistant extension
+4. Click the refresh icon (🔄) to reload the extension
+
+#### Troubleshooting
+- If the extension doesn't appear, make sure all files in `manifest.json` are present
+- Check Chrome's developer console for any errors
+- Try removing and re-adding the extension if updates aren't showing
+- Ensure the backend server is running for the extension to work properly
 
 ## 🔧 Configuration
 
@@ -112,8 +150,28 @@ Before running the backend, you need to configure your API keys:
    cd email-writer-backend/src/main/resources
    ```
 
-2. **Copy the template file**:
+2. **Create api-keys.properties file**:
    ```bash
+   # On Windows
+   copy nul api-keys.properties
+   # On Unix/Linux/MacOS
+   touch api-keys.properties
+   ```
+
+3. **Add your API key**:
+   Open `api-keys.properties` and add the following:
+   ```properties
+   # API Configuration
+   gemini.api.key=YOUR_ACTUAL_GEMINI_API_KEY_HERE
+   ```
+
+4. **Verify Configuration**:
+   ```bash
+   # Make sure the file exists and is not tracked by git
+   ls api-keys.properties
+   # The file should be listed but ignored by git
+   git status
+   ```
    cp api-keys.properties.template api-keys.properties
    ```
 

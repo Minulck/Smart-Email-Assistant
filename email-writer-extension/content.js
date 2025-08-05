@@ -75,7 +75,7 @@ function injectButton() {
       const tone = "formal"; // or get this from user input if available
       console.log("Sending to backend:", { emailContent, tone });
 
-      const response = await fetch("http://localhost:8080/api/email/generate", {
+      const response = await fetch("https://smart-email-assistant-51kx.onrender.com/api/email/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
