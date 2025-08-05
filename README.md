@@ -7,6 +7,12 @@
 [![Vite](https://img.shields.io/badge/Vite-7.0.4-purple.svg)](https://vitejs.dev/)
 [![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-Manifest%20V3-green.svg)](https://developer.chrome.com/docs/extensions/)
 
+📧 A powerful AI-powered email assistant that integrates with Gmail to help you write better emails. This project includes:
+
+- A Chrome Extension that adds an "AI Reply" button directly in Gmail
+- A standalone web application for composing emails
+- A Spring Boot backend that handles the AI processing using Google's Gemini AI
+
 An intelligent email composition and reply generation system powered by AI. This project consists of a Chrome extension, a React-based frontend, and a Spring Boot backend that work together to provide smart email assistance.
 
 ## 🚀 Features
@@ -70,25 +76,73 @@ cd Smart-Email-Assistant
 ```
 
 ### 2. Backend Setup (Spring Boot)
+
+#### 2.1 Basic Setup
 ```bash
+# Navigate to backend directory
 cd email-writer-backend
 
-# IMPORTANT: Configure API Keys first (see Configuration section below)
+# For Windows
+mvnw.cmd clean install
+# For Unix/Linux/MacOS
+./mvnw clean install
+```
 
-# Install dependencies and run
-./mvnw spring-boot:run
-# OR on Windows
+#### 2.2 Configure Environment Variables
+
+1. Set up environment variables for Gemini AI:
+
+On Windows (PowerShell):
+```powershell
+$env:GEMINI_API_KEY="your-actual-api-key-here"
+$env:GEMINI_API_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+```
+
+On Windows (Command Prompt):
+```cmd
+set GEMINI_API_KEY=your-actual-api-key-here
+set GEMINI_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+```
+
+On Unix/Linux/MacOS:
+```bash
+export GEMINI_API_KEY="your-actual-api-key-here"
+export GEMINI_API_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+```
+
+For permanent setup:
+- Windows: Add these variables in System Properties > Environment Variables
+- Unix/Linux/MacOS: Add to `~/.bashrc` or `~/.zshrc`
+
+#### 2.3 Run the Backend
+```bash
+# For Windows
 mvnw.cmd spring-boot:run
+# For Unix/Linux/MacOS
+./mvnw spring-boot:run
 
 # The backend will start on http://localhost:8080
 ```
 
-### 3. Frontend Setup (React)
+#### 2.4 Verify Installation
 ```bash
+# Test the health endpoint
+curl http://localhost:8080/api/email/hello
+# Should return: "hello world"
+```
+
+### 3. Frontend Setup (React)
+
+#### 3.1 Basic Setup
+```bash
+# Navigate to frontend directory
 cd email-writer-frontend
 
 # Install dependencies
 npm install
+
+# Create development build
+npm run build
 
 # Start development server
 npm run dev
@@ -96,26 +150,40 @@ npm run dev
 # The frontend will start on http://localhost:5173
 ```
 
+#### 3.2 Environment Setup (Optional)
+Create `.env.local` for environment variables:
+```bash
+# Windows
+copy nul .env.local
+# Unix/Linux/MacOS
+touch .env.local
+```
+
+Add the following variables if needed:
+```properties
+VITE_API_URL=http://localhost:8080
+```
+
+#### 3.3 Verify Installation
+1. Open `http://localhost:5173` in your browser
+2. You should see the email composition interface
+3. Try generating an email to test the connection to the backend
+
 ### 4. Chrome Extension Setup
 
-#### Building the Extension Locally
-1. **Navigate to the extension directory**:
-   ```bash
-   cd email-writer-extension
-   ```
+#### 4.1 Building the Extension
+```bash
+# Navigate to extension directory
+cd email-writer-extension
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. **Build the extension**:
-   ```bash
-   npm run build
-   ```
-   This will create a `dist` folder with the built extension files.
+# Build the extension
+npm run build
+```
 
-#### Installing in Chrome
+#### 4.2 Installing in Chrome Development Mode
 1. **Open Chrome** and navigate to `chrome://extensions/`
 2. **Enable "Developer mode"** by toggling the switch in the top right corner
 3. **Click "Load unpacked"** button that appears after enabling developer mode
@@ -142,58 +210,89 @@ npm run dev
 
 ## 🔧 Configuration
 
-### API Keys Setup (IMPORTANT)
-Before running the backend, you need to configure your API keys:
+### Environment Variables Setup (IMPORTANT)
 
-1. **Navigate to the backend resources folder**:
-   ```bash
-   cd email-writer-backend/src/main/resources
-   ```
+The backend uses environment variables for configuration. Here's how to set them up:
 
-2. **Create api-keys.properties file**:
-   ```bash
-   # On Windows
-   copy nul api-keys.properties
-   # On Unix/Linux/MacOS
-   touch api-keys.properties
-   ```
+#### Local Development Setup
 
-3. **Add your API key**:
-   Open `api-keys.properties` and add the following:
+1. **Required Environment Variables**:
    ```properties
-   # API Configuration
-   gemini.api.key=YOUR_ACTUAL_GEMINI_API_KEY_HERE
+   GEMINI_API_KEY=your-actual-api-key-here
+   GEMINI_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
    ```
 
-4. **Verify Configuration**:
+2. **Setting Environment Variables**:
+
+   **Windows (PowerShell)**:
+   ```powershell
+   $env:GEMINI_API_KEY="your-actual-api-key-here"
+   $env:GEMINI_API_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+   ```
+
+   **Windows (Command Prompt)**:
+   ```cmd
+   set GEMINI_API_KEY=your-actual-api-key-here
+   set GEMINI_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+   ```
+
+   **Unix/Linux/MacOS**:
    ```bash
-   # Make sure the file exists and is not tracked by git
-   ls api-keys.properties
-   # The file should be listed but ignored by git
-   git status
-   ```
-   cp api-keys.properties.template api-keys.properties
+   export GEMINI_API_KEY="your-actual-api-key-here"
+   export GEMINI_API_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
    ```
 
-3. **Edit the `api-keys.properties` file** and replace `YOUR_GEMINI_API_KEY_HERE` with your actual Gemini API key:
-   ```properties
-   # API Configuration
-   gemini.api.key=YOUR_ACTUAL_GEMINI_API_KEY_HERE
-   ```
+3. **Permanent Setup**:
+
+   **Windows**:
+   - Open System Properties (Win + Pause/Break)
+   - Click "Environment Variables"
+   - Add under "System variables" or "User variables"
+
+   **Unix/Linux/MacOS**:
+   - Add to your shell's configuration file:
+     ```bash
+     # Add to ~/.bashrc or ~/.zshrc
+     export GEMINI_API_KEY="your-actual-api-key-here"
+     export GEMINI_API_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+     ```
 
 4. **Important Security Notes**:
-   - The `api-keys.properties` file is already added to `.gitignore` and will not be committed to version control
    - Never commit your actual API keys to the repository
    - Keep your API keys secure and do not share them publicly
+   - Consider using a key management service in production
 
 ### Backend Configuration
-The backend configuration can be found in `email-writer-backend/src/main/resources/application.properties`:
 
+The backend is configured through environment variables and application properties.
+
+#### application.properties
+Located at `email-writer-backend/src/main/resources/application.properties`:
 ```properties
 spring.application.name=email-writer
-spring.config.import=optional:classpath:api-keys.properties
-gemini.api.url=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
-# Configure other properties as needed
+server.port=8080
+
+# These values are replaced by environment variables
+gemini.api.url=${GEMINI_API_URL}
+gemini.api.key=${GEMINI_API_KEY}
+```
+
+#### Docker Configuration
+If using Docker, you can pass environment variables in the docker run command:
+```bash
+docker run -e GEMINI_API_KEY="your-key" -e GEMINI_API_URL="your-url" -p 8080:8080 email-writer-backend
+```
+
+Or using docker-compose:
+```yaml
+services:
+  backend:
+    build: ./email-writer-backend
+    environment:
+      - GEMINI_API_KEY=your-key
+      - GEMINI_API_URL=your-url
+    ports:
+      - "8080:8080"
 ```
 
 ### Frontend Configuration
@@ -264,16 +363,38 @@ Health check endpoint that returns a simple greeting.
 ## 🎯 Usage
 
 ### Using the Chrome Extension
-1. **Install the extension** following the setup instructions above
-2. **Navigate to Gmail** in Chrome
-3. **Click on the Smart Email Assistant extension icon** in the toolbar
-4. **The popup interface will open** with the following features:
-   - Automatic detection of current email content
-   - Tone selection dropdown (formal, casual, friendly, etc.)
-   - Generate button to create AI-powered replies
-   - Copy functionality to transfer generated content to Gmail
-5. **Select your preferred tone** and click "Generate Reply"
-6. **Copy the generated content** and paste it into your Gmail compose window
+
+#### Extension Features
+The extension adds several features to Gmail:
+
+1. **AI Reply Button**: 
+   - Appears in Gmail's compose window
+   - Click to generate AI-powered responses
+   - Supports multiple email tones
+
+2. **Popup Interface**:
+   - Access via the extension icon in Chrome toolbar
+   - Features:
+     - Email content detection
+     - Tone selection (formal, casual, friendly, etc.)
+     - One-click generation
+     - Copy to clipboard functionality
+
+#### Usage Steps
+1. Open Gmail in Chrome
+2. Start composing or replying to an email
+3. Use the extension in two ways:
+   - Click the "AI Reply" button in Gmail's compose toolbar
+   - Or use the extension popup from Chrome's toolbar
+4. Select your preferred tone
+5. Click "Generate Reply"
+6. Review and edit the generated content as needed
+
+#### Tips for Best Results
+- Ensure the backend server is running
+- Check Chrome's console (F12) if the button doesn't appear
+- Allow up to 5 seconds for AI generation
+- Review and customize generated content before sending
 
 ### Using the Web Interface
 1. **Start the backend and frontend** servers as described in the setup section
